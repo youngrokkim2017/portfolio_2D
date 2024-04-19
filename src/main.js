@@ -17,3 +17,11 @@ k.loadSprite("map", "./map.png")
 
 k.setBackground(k.Color.fromHex("#311047"))
 
+k.scene("main", async () => {
+  const mapData = await (await fetch("./map.json")).json();
+  const layers = mapData.layers;
+
+  const map = k.add([k.sprite("map"), k.pos(0), k.scale(scaleFactor)]);
+});
+
+k.go("main");
