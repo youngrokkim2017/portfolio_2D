@@ -40,6 +40,43 @@ k.scene("main", async () => {
     },
     "player",
   ]);
+
+  for (const layer of layers) {
+    if (layer.name === "boundaries") {
+      for (const boundary of layer.objects) {
+        map.add([
+          k.area({
+            shape: new k.Rect(k.vec2(0), boundary.width, boundary.height),
+          }),
+          k.body({ isStatic: true }),
+          k.pos(boundary.x, boundary.y),
+          boundary.name,
+        ]);
+
+        if (boundary.name) {
+          player.onCollide(boundary.name, () => {
+            player.isInDialogue = true;
+            // Dialogue
+          });
+        }
+      }
+
+      continue;
+    }
+
+    if (layer.name === "spawnpoints") {
+      for (const entity of layer.objects) {
+        if (entity.name === "player") {
+          player.pos = k.vec2(
+            (map.pos.x + entity.x) * scaleFactor,
+            (map.pos.y + entity.y) * scaleFactor
+          );
+          k.add(player);
+          continue;
+        }
+      }
+    }
+  }
 });
 
 k.go("main");
