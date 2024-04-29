@@ -1,5 +1,6 @@
 import { k } from "./kaboomCtx";
 import { displayDialogue, setCamScale } from "./utils";
+import { dialogueData } from "./constants"; 
 
 k.loadSprite("spritesheet", "./spritesheet.png", {
   sliceX: 39,
